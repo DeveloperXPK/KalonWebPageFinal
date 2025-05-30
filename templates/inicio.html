@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Kalon{% endblock %}
+
+{% block content %}
+    <h1>Kalon</h1>
+    <p>Disfruta de los <b>mejores cuadros</b></p>
+
+    <div class="row">
+        {% for cuadro in cuadros %}
+            {% include 'Componentes/tarjetas.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
