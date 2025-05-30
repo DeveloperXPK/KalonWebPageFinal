@@ -80,3 +80,56 @@ th, td {
     color: green;
     text-align: center;
 }
+
+/* Estilos adicionales para layout sticky header/footer */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Reemplazamos el padding original */
+    background: #e0f0ff;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* Movemos el padding aquí */
+}
+
+main.container {
+    flex: 1;
+}
+
+/* Header sticky */
+header.sticky-top {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+/* Footer siempre abajo */
+footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Mejorar espaciado del contenido */
+.container.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px;
+    }
+    
+    body {
+        padding: 0;
+    }
+}

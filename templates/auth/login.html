@@ -17,8 +17,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="contraseña" required>
                         </div>
+                        <div id="error-message" class="alert alert-danger d-none"></div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                         </div>
@@ -36,8 +37,40 @@
 <script>
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    // Aquí puedes agregar la lógica de login con AJAX
-    console.log('Formulario de login enviado');
+    
+    const formData = new FormData(this);
+    const data = {
+        email: formData.get('email'),
+        contraseña: formData.get('contraseña')
+    };
+    
+    // Ocultar mensaje de error anterior
+    const errorDiv = document.getElementById('error-message');
+    errorDiv.classList.add('d-none');
+    
+    fetch('{{ url_for("login") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect) {
+            // Login exitoso, redirigir
+            window.location.href = data.redirect;
+        } else if (data.mensaje) {
+            // Mostrar error
+            errorDiv.textContent = data.mensaje;
+            errorDiv.classList.remove('d-none');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        errorDiv.textContent = 'Error de conexión';
+        errorDiv.classList.remove('d-none');
+    });
 });
 </script>
 {% endblock %} 
