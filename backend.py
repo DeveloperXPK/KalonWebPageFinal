@@ -61,18 +61,19 @@ def inicio():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    db = get_db()
+    db = get_db() 
     if request.method == 'POST':
         data = request.get_json() if request.is_json else request.form
         cursor = db.execute('SELECT * FROM usuarios WHERE email = ? AND contraseña = ?',
                            [data['email'], data['contraseña']])
         usuario = cursor.fetchone()
+        print(usuario)
         if usuario:
             # Guardar información del usuario en la sesión
             session['usuario_id'] = usuario[0]
             session['usuario_nombre'] = usuario[1]
             session['usuario_email'] = usuario[2]
-            session['usuario_rol'] = usuario[3]
+            session['usuario_rol'] = usuario[4]
             session['autenticado'] = True
             
             if request.is_json:
